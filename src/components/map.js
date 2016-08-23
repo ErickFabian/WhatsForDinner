@@ -4,7 +4,7 @@ import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 
 export default function Map (props) {
   return (
-    <section style={{height: "100%"}}>
+    <div id="map">
       <GoogleMapLoader
         containerElement={
           <div
@@ -30,6 +30,8 @@ export default function Map (props) {
           </GoogleMap>
         }
       />
-    </section>
+    </div>
   );
 }
+
+//http://stackoverflow.com/questions/17961669/how-to-make-a-full-screen-google-map-with-website-menu-overlay

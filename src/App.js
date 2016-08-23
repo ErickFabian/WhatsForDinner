@@ -1,54 +1,29 @@
 import React, { Component } from 'react';
-import update from "react-addons-update";
-import Map from './components/map';
-import './App.css';
+import Sidebar from './components/sidebar';
+import Content from './components/content';
+import ClassNames from 'classnames';
 
 class App extends Component {
-  handleMapClick = this.handleMapClick.bind(this);
-  handleMarkerRightclick = this.handleMarkerRightclick.bind(this);
+  contentToggledClass = this.contentToggledClass;
 
   state = {
-    markers: [{
-      position: {
-        lat: 20.6612363,
-        lng: -103.3298526,
-      },
-      key: `Home`,
-      defaultAnimation: 2,
-    }],
+    isToggled: true
   };
 
-  handleMapClick(event) {
-    let { markers } = this.state;
-    markers = update(markers, {
-      $push: [
-        {
-          position: event.latLng,
-          defaultAnimation: 2,
-          key:  Date.now(),
-        },
-      ],
-    });
-    this.setState({ markers });
-  }
-
-  handleMarkerRightclick(index, event) {
-    let { markers } = this.state;
-    markers = update(markers, {
-      $splice: [
-        [index, 1],
-      ],
-    });
-    this.setState({ markers });
+  contentToggledClass() {
+    console.log(this.state.isToggled);
+    return this.state.isToggled ?
+      'toggled' : 'a';
   }
 
   render() {
+    let wrapperClass = this.contentToggledClass();
+    console.log(wrapperClass);
     return (
-      <Map
-        markers={this.state.markers}
-        onMapClick={this.handleMapClick}
-        onMarkerRightclick={this.handleMarkerRightclick}
-      />
+      <div id='wrapper' className={this.wrapperClass}>
+        <Sidebar />
+        <Content />
+      </div>
     );
   }
 }
