@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
 import Sidebar from './components/sidebar';
 import Content from './components/content';
-import ClassNames from 'classnames';
 
 class App extends Component {
-  contentToggledClass = this.contentToggledClass;
-
   state = {
-    isToggled: true
-  };
+    isToggled: false
+  }
 
   contentToggledClass() {
-    console.log(this.state.isToggled);
-    return this.state.isToggled ?
-      'toggled' : 'a';
+    return this.state.isToggled ? 'toggled' : '';
+  }
+
+  toggleSidebar() {
+    this.setState({ isToggled: !this.state.isToggled});
   }
 
   render() {
-    let wrapperClass = this.contentToggledClass();
-    console.log(wrapperClass);
     return (
-      <div id='wrapper' className={this.wrapperClass}>
+      <div id='wrapper' className={this.contentToggledClass()}>
         <Sidebar />
-        <Content />
+        <Content
+          onSidebarToggle={this.toggleSidebar.bind(this)}
+        />
       </div>
     );
   }
