@@ -5,6 +5,8 @@ import Map from './map';
 import Modal from 'react-bootstrap/lib/Modal';
 import MarkerSubmitForm from './marker-submit-form';
 
+const foodStandsEndpoint = "http://localhost:3001/food_stands";
+
 class Content extends Component {
   state = {
     showModal: false,
@@ -23,17 +25,28 @@ class Content extends Component {
   };
 
   componentDidMount() {
+    this.getCurrentPosition();
+    this.fetchFoodStands();
+  }
+
+  getCurrentPosition() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         let pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-
-        console.log('pos', pos);
-        this.setState({ userLocation: pos})
+        this.setState({ userLocation: pos});
+      },() => {
+        this.handleLocationError();
       });
+    } else {
+      this.handleLocationError();
     }
+  }
+
+  handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    alert('Could not find your location');
   }
 
   close() {
@@ -45,6 +58,37 @@ class Content extends Component {
     this.addMarkerToMap();
     this.setState({ event: null });
     this.setState({ showModal: false });
+  }
+
+  fetchFoodStands() {
+    fetch(foodStandsEndpoint)
+      .then((response) => {
+          response.json().then((data) => {
+            this.setState({
+              markers: this.parseMarkers(data.food_stands)
+            });
+          });
+        }
+      )
+      .catch((err) => {
+        console.log('Fetch Error :-S', err);
+      });
+  }
+
+  parseMarkers(foodStands) {
+    return foodStands.map((foodStand) => {
+      let foodStandObj = {
+        key:      foodStand.id,
+        name:     foodStand.name,
+        address:  foodStand.address,
+        schedule: foodStand.schedule,
+        position: {
+          lat: parseFloat(foodStand.position.lat),
+          lng: parseFloat(foodStand.position.lng)
+        }
+      }
+      return foodStandObj;
+    });
   }
 
   addMarkerToMap() {
@@ -79,7 +123,6 @@ class Content extends Component {
   }
 
   render() {
-    console.log('render', this.state.userLocation);
     return (
       <div id="page-content-wrapper">
         <Navigation

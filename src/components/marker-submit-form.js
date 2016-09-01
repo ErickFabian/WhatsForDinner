@@ -6,7 +6,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import FormControl from 'react-bootstrap/lib/FormControl';
 
-const businessEndpoint = "http://localhost:3000/business";
+const foodStandsEndpoint = "http://localhost:3000/food_stands";
 
 class MarkerSubmitForm extends Component {
   state = {
@@ -37,7 +37,7 @@ class MarkerSubmitForm extends Component {
       lng: this.props.target.latLng.lat()
     };
 
-    fetch(businessEndpoint, {
+    fetch(foodStandsEndpoint, {
       method: 'post',
       data: data
     }).then(function(response) {
