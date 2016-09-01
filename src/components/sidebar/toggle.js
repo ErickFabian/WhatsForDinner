@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FaBars from 'react-icons/lib/fa/bars';
 
-class SidebarToggle extends Component {
-  render() {
-    return (
-      <FaBars
-        size={30}
-        onClick={this.props.onSidebarToggle}
-        style={{position: 'relative', top: '8px', left: '10px'}}
-      />
-    );
-  }
-}
+const SidebarToggle = props => (
+  <FaBars
+    size={30}
+    onClick={props.onSidebarToggle}
+    style={{position: 'relative', top: '8px', left: '10px', cursor: 'pointer'}}
+  />
+);
+
+SidebarToggle.propTypes = {
+  onSidebarToggle: React.PropTypes.func.isRequired
+};
 
 export default SidebarToggle;

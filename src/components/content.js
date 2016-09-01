@@ -16,7 +16,25 @@ class Content extends Component {
       key: `Home`,
       defaultAnimation: 2,
     }],
+    userLocation: {
+      lat: 20.6612363,
+      lng: -103.3298526
+    }
   };
+
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        console.log('pos', pos);
+        this.setState({ userLocation: pos})
+      });
+    }
+  }
 
   close() {
     this.setState({ event: null });
@@ -61,6 +79,7 @@ class Content extends Component {
   }
 
   render() {
+    console.log('render', this.state.userLocation);
     return (
       <div id="page-content-wrapper">
         <Navigation
@@ -72,6 +91,7 @@ class Content extends Component {
             markers={this.state.markers}
             onMapClick={this.handleMapClick.bind(this)}
             onMarkerRightclick={this.handleMarkerRightclick.bind(this)}
+            userLocation={this.state.userLocation}
           />
         </div>
 
