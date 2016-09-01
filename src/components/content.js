@@ -10,14 +10,7 @@ const foodStandsEndpoint = "http://localhost:3001/food_stands";
 class Content extends Component {
   state = {
     showModal: false,
-    markers: [{
-      position: {
-        lat: 20.6612363,
-        lng: -103.3298526,
-      },
-      key: `Home`,
-      defaultAnimation: 2,
-    }],
+    markers: [],
     userLocation: {
       lat: 20.6612363,
       lng: -103.3298526
@@ -49,6 +42,24 @@ class Content extends Component {
     alert('Could not find your location');
   }
 
+  fetchFoodStands() {
+    axios.get(foodStandsEndpoint, {
+    })
+    .then((response) => {
+      let data = JSON.parse(response.request.response);
+      this.setState({
+        markers: this.parseMarkers(data.food_stands)
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  deleteFoodStand(stand) {
+    axios.delete(`${foodStandsEndpoint}/${stand.key}`);
+  }
+
   close() {
     this.setState({ event: null });
     this.setState({ showModal: false });
@@ -58,21 +69,6 @@ class Content extends Component {
     this.addMarkerToMap();
     this.setState({ event: null });
     this.setState({ showModal: false });
-  }
-
-  fetchFoodStands() {
-    fetch(foodStandsEndpoint)
-      .then((response) => {
-          response.json().then((data) => {
-            this.setState({
-              markers: this.parseMarkers(data.food_stands)
-            });
-          });
-        }
-      )
-      .catch((err) => {
-        console.log('Fetch Error :-S', err);
-      });
   }
 
   parseMarkers(foodStands) {
@@ -114,6 +110,13 @@ class Content extends Component {
 
   handleMarkerRightclick(index, event) {
     let { markers } = this.state;
+    let marker = markers[index];
+
+    this.deleteFoodStand(marker);
+    this.removeMarkerFromMap(markers, index);
+  }
+
+  removeMarkerFromMap(markers, index) {
     markers = update(markers, {
       $splice: [
         [index, 1],
