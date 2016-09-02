@@ -11,8 +11,9 @@ const foodStandsEndpoint = "http://localhost:3001/food_stands";
 class MarkerSubmitForm extends Component {
   state = {
     foodStandName: '',
+    foodStandCover: '',
     foodStandAddress: '',
-    foodStandAddress: ''
+    foodStandSchedule: ''
   }
 
   handleChange(e) {
@@ -21,8 +22,8 @@ class MarkerSubmitForm extends Component {
     });
   }
 
-  getValidationState() {
-    const length = this.state.foodStandName.length;
+  getValidationState(attribute) {
+    const length = this.state[attribute].length;
     if (length >= 10) return 'success';
     else if (length >= 4) return 'warning';
     else if (length <= 3) return 'error';
@@ -34,13 +35,21 @@ class MarkerSubmitForm extends Component {
   }
 
   saveFoodStand() {
+    let data = new FormData();
+    let payload = {
+      name:     this.state.foodStandName,
+      position: this.props.target.latLng,
+      address:  this.state.foodStandAddress,
+      schedule: this.state.foodStandSchedule,
+      cover:    this.state.foodStandCover
+    }
+
+    data.append('food_stand', JSON.stringify(payload));
+    console.log(data);
     axios.post(foodStandsEndpoint, {
-      food_stand: {
-        name:     this.state.foodStandName,
-        position: this.props.target.latLng,
-        address:  this.state.foodStandAddress,
-        schedule: this.state.foodStandSchedule
-      }
+      data
+    },{
+      'Content-Type': 'multipart/form-data'
     })
     .then((response) => {
       this.props.submitMarker();
@@ -63,7 +72,7 @@ class MarkerSubmitForm extends Component {
         <Modal.Body>
           <FormGroup
             controlId="formBasicText"
-            validationState={this.getValidationState()}
+            validationState={this.getValidationState('foodStandName')}
           >
             <ControlLabel>Name</ControlLabel>
             <FormControl
@@ -79,7 +88,7 @@ class MarkerSubmitForm extends Component {
 
           <FormGroup
             controlId="formBasicText"
-            validationState={this.getValidationState()}
+            validationState={this.getValidationState('foodStandAddress')}
           >
             <ControlLabel>Address</ControlLabel>
             <FormControl
@@ -95,7 +104,6 @@ class MarkerSubmitForm extends Component {
 
           <FormGroup
             controlId="formBasicText"
-            validationState={this.getValidationState()}
           >
             <ControlLabel>schedule</ControlLabel>
             <FormControl
@@ -108,9 +116,15 @@ class MarkerSubmitForm extends Component {
             />
 
             <FormControl.Feedback />
-            <HelpBlock>Validation is based on string length.</HelpBlock>
           </FormGroup>
 
+          <FormControl
+            type="file"
+            value={this.state.foodStandCover}
+            name="foodStandCover"
+            placeholder="Enter the address of the Food Stand"
+            onChange={this.handleChange.bind(this)}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button type='submit' className='btn btn-primary btn-md'>Submit</Button>

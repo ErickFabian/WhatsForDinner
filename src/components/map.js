@@ -9,6 +9,8 @@ const Map = props => (
           {...props.containerElementProps}
           style={{
             height: "100%",
+            width: "100%",
+            marginLeft: 0
           }}
         />
       }
@@ -22,7 +24,9 @@ const Map = props => (
             return (
               <Marker
                 {...marker}
-                onRightclick={() => props.onMarkerRightclick(index)} />
+                onClick={() => props.onMarkerClick(index)}
+                onRightclick={() => props.onMarkerRightclick(index)}
+              />
             );
           })}
         </GoogleMap>

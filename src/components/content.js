@@ -4,13 +4,15 @@ import Navigation from './navigation';
 import Map from './map';
 import Modal from 'react-bootstrap/lib/Modal';
 import MarkerSubmitForm from './marker-submit-form';
-
-const foodStandsEndpoint = "http://localhost:3001/food_stands";
+import FoodStandModal from './food-stand-modal';
+import FoodStandAdapter from '../adapters/food_stand';
 
 class Content extends Component {
   state = {
     showModal: false,
+    showFoodStandModal: false,
     markers: [],
+    marker: '',
     userLocation: {
       lat: 20.6612363,
       lng: -103.3298526
@@ -29,7 +31,7 @@ class Content extends Component {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-        this.setState({ userLocation: pos});
+        this.setState({ userLocation: pos });
       },() => {
         this.handleLocationError();
       });
@@ -43,47 +45,31 @@ class Content extends Component {
   }
 
   fetchFoodStands() {
-    axios.get(foodStandsEndpoint, {
-    })
+    FoodStandAdapter.get()
     .then((response) => {
       let data = JSON.parse(response.request.response);
       this.setState({
-        markers: this.parseMarkers(data.food_stands)
+        markers: FoodStandAdapter.parseMarkers(data.food_stands)
       });
     })
     .catch((error) => {
-      console.log(error);
+      return error;
     });
   }
 
-  deleteFoodStand(stand) {
-    axios.delete(`${foodStandsEndpoint}/${stand.key}`);
-  }
-
   close() {
-    this.setState({ event: null });
-    this.setState({ showModal: false });
+    this.setState({
+      showFoodStandModal: false,
+      showModal: false,
+      event: null
+    });
   }
 
   submitMarker(e) {
     this.addMarkerToMap();
-    this.setState({ event: null });
-    this.setState({ showModal: false });
-  }
-
-  parseMarkers(foodStands) {
-    return foodStands.map((foodStand) => {
-      let foodStandObj = {
-        key:      foodStand.id,
-        name:     foodStand.name,
-        address:  foodStand.address,
-        schedule: foodStand.schedule,
-        position: {
-          lat: parseFloat(foodStand.position.lat),
-          lng: parseFloat(foodStand.position.lng)
-        }
-      }
-      return foodStandObj;
+    this.setState({
+      event: null,
+      showModal: false
     });
   }
 
@@ -108,11 +94,21 @@ class Content extends Component {
     });
   }
 
+  handleMarkerClick(index) {
+    let { markers } = this.state;
+    let marker = markers[index];
+
+    this.setState({
+      showFoodStandModal: true,
+      marker: marker
+    });
+  }
+
   handleMarkerRightclick(index, event) {
     let { markers } = this.state;
     let marker = markers[index];
 
-    this.deleteFoodStand(marker);
+    FoodStandAdapter.delete(stand.key);
     this.removeMarkerFromMap(markers, index);
   }
 
@@ -136,6 +132,7 @@ class Content extends Component {
           <Map
             markers={this.state.markers}
             onMapClick={this.handleMapClick.bind(this)}
+            onMarkerClick={this.handleMarkerClick.bind(this)}
             onMarkerRightclick={this.handleMarkerRightclick.bind(this)}
             userLocation={this.state.userLocation}
           />
@@ -145,6 +142,13 @@ class Content extends Component {
           <MarkerSubmitForm
             target={this.state.event}
             submitMarker={this.submitMarker.bind(this)}
+            closeModal={this.close.bind(this)}
+          />
+        </Modal>
+
+        <Modal bsSize="large" show={this.state.showFoodStandModal} onHide={this.close.bind(this)}>
+          <FoodStandModal
+            marker={this.state.marker}
             closeModal={this.close.bind(this)}
           />
         </Modal>
