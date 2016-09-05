@@ -1,7 +1,9 @@
 import React from "react";
 import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 
-const Map = props => (
+const { any, array, object, func } = React.PropTypes;
+
+const FoodStandsMap = props => (
   <div id="map">
     <GoogleMapLoader
       containerElement={
@@ -25,7 +27,7 @@ const Map = props => (
               <Marker
                 {...marker}
                 onClick={() => props.onMarkerClick(index)}
-                onRightclick={() => props.onMarkerRightclick(index)}
+                onRightclick={() => props.onMarkerRightClick(index)}
               />
             );
           })}
@@ -35,12 +37,15 @@ const Map = props => (
   </div>
 );
 
-Map.propTypes = {
-  markers: React.PropTypes.array.isRequired,
-  onMapClick: React.PropTypes.func.isRequired,
-  userLocation: React.PropTypes.object.isRequired,
-  onMarkerRightclick: React.PropTypes.func.isRequired,
-  containerElementProps: React.PropTypes.any
+FoodStandsMap.propTypes = {
+  markers:            array.isRequired,
+  userLocation:       object.isRequired,
+
+  onMapClick:         func.isRequired,
+  onMarkerClick:      func.isRequired,
+  onMarkerRightClick: func.isRequired,
+
+  containerElementProps: any
 };
 
-export default Map;
+export default FoodStandsMap;

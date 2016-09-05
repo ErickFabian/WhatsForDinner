@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Sidebar from './components/sidebar';
-import Content from './components/content';
+import AppContainer from './App-container';
 
 class App extends Component {
   state = {
@@ -17,12 +16,11 @@ class App extends Component {
 
   render() {
     return (
-      <div id='wrapper' className={this.contentToggledClass()}>
-        <Sidebar />
-        <Content
-          onSidebarToggle={this.toggleSidebar.bind(this)}
-        />
-      </div>
+      <AppContainer
+        contentToggledClass={this.contentToggledClass()}
+        onSidebarToggle={this.toggleSidebar.bind(this)}
+      >
+      </AppContainer>
     );
   }
 }

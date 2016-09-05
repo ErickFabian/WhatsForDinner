@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SidebarToggle from './sidebar/toggle';
 
-class App extends Component {
-  render() {
-    return (
-      <nav className="navbar navbar-default">
-        <div className="container">
-          <div className="navbar-header">
-            <SidebarToggle
-              onSidebarToggle={this.props.onSidebarToggle}
-            />
-          </div>
-        </div>
-      </nav>
-    );
-  }
-}
+const Navigation = props => (
+  <nav className="navbar navbar-default">
+    <div className="container">
+      <div className="navbar-header">
+        <SidebarToggle
+          onSidebarToggle={props.onSidebarToggle}
+        />
+      </div>
+    </div>
+  </nav>
+);
 
-export default App;
+Navigation.propTypes = {
+  onSidebarToggle: React.PropTypes.func.isRequired
+};
+
+export default Navigation;

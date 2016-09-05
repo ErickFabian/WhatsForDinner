@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
 
-const foodStandsEndpoint = "http://localhost:3001/food_stands";
-
 class FoodStandModal extends Component {
   render() {
     return (

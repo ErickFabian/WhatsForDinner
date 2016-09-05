@@ -1,14 +1,23 @@
 import axios from 'axios';
+import ApplicationAdapter from '../adapters/application_adapter.js';
 
-const foodStandsEndpoint = "http://localhost:3001/food_stands";
+const resource = 'foodStands';
 
-var foodStandAdapter = {
-  get() {
-    return axios.get(foodStandsEndpoint);
+let foodStandAdapter = {
+  get(params = {}) {
+    return axios.get(this.url(), params);
   },
 
   delete(id) {
-    return axios.delete(`${foodStandsEndpoint}/${id}`);
+    return axios.delete(`${this.url()}/${id}`);
+  },
+
+  create(params) {
+    return axios.post(this.url(), params);
+  },
+
+  url() {
+    return ApplicationAdapter.buildUrlFor(resource);
   },
 
   parseMarkers(foodStands) {
