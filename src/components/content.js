@@ -2,8 +2,8 @@ import React from 'react';
 import Modal from 'react-bootstrap/lib/Modal';
 import FoodStandsMap from '../components/food-stands-map';
 import Navigation from '../components/navigation';
-import FoodStandModal from '../components/food-stand-modal';
 import FoodStandFormContainer from '../containers/food-stand-form-container';
+import FoodStandModalContainer from '../containers/food_stand_modal_container';
 
 const { bool, array, object, func } = React.PropTypes;
 
@@ -32,8 +32,8 @@ const Content = props => (
     </Modal>
 
     <Modal bsSize="large" show={props.showFoodStandModal} onHide={props.onModalClose}>
-      <FoodStandModal
-        marker={props.clickedMarker}
+      <FoodStandModalContainer
+        foodStand={props.clickedMarker}
         closeModal={props.onModalClose}
       />
     </Modal>

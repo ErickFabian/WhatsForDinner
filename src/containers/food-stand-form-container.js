@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FoodStandAdapter from '../adapters/food_stand';
-import FoodStandForm from '../components/food-stand-form';
+import FoodStandForm from '../components/food_stand_form';
 
 class FoodStandFormContainer extends Component {
   state = {
@@ -11,9 +11,16 @@ class FoodStandFormContainer extends Component {
   }
 
   handleChange(e) {
-    this.setState({
-      [e.target.getAttribute('name')]: e.target.value
-    });
+    if (e.target.getAttribute('name') === 'foodStandCover') {
+      console.log(e.target.files[0]);
+      this.setState({
+        'foodStandCover': e.target.files[0]
+      })
+    } else {
+      this.setState({
+        [e.target.getAttribute('name')]: e.target.value
+      });
+    }
   }
 
   getValidationState(attribute) {
@@ -29,18 +36,17 @@ class FoodStandFormContainer extends Component {
   }
 
   saveFoodStand() {
-    let food_stand = {
-      food_stand: {
-        name:     this.state.foodStandName,
-        position: this.props.clickedMapPoint.latLng,
-        address:  this.state.foodStandAddress,
-        schedule: this.state.foodStandSchedule
-      }
-    };
+    var food_stand = new FormData();
+    food_stand.append('food_stand[name]', this.state.foodStandName);
+    food_stand.append('food_stand[cover]', this.state.foodStandCover);
+    food_stand.append('food_stand[address]', this.state.foodStandAddress);
+    food_stand.append('food_stand[schedule]', this.state.foodStandSchedule);
+    food_stand.append('food_stand[position][lat]', this.props.clickedMapPoint.latLng.lat());
+    food_stand.append('food_stand[position][lng]', this.props.clickedMapPoint.latLng.lng());
 
     FoodStandAdapter.create(food_stand).then((response) => {
       this.props.submitMarker();
-    })
+    });
   }
 
   render() {

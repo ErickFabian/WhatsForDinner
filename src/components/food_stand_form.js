@@ -64,9 +64,7 @@ const FoodStandForm = props => (
 
       <FormControl
         type="file"
-        value={props.foodStandCover}
         name="foodStandCover"
-        placeholder="Enter the address of the Food Stand"
         onChange={props.onInputChange}
       />
     </Modal.Body>

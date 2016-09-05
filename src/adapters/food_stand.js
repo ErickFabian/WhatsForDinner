@@ -8,6 +8,10 @@ let foodStandAdapter = {
     return axios.get(this.url(), params);
   },
 
+  show(id){
+    return axios.get(`${this.url()}/${id}`);
+  },
+
   delete(id) {
     return axios.delete(`${this.url()}/${id}`);
   },
@@ -25,6 +29,7 @@ let foodStandAdapter = {
       let foodStandObj = {
         key:      foodStand.id,
         name:     foodStand.name,
+        cover:    foodStand.cover,
         address:  foodStand.address,
         schedule: foodStand.schedule,
         position: {
