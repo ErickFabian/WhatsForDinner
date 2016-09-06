@@ -6,6 +6,11 @@ body {
   overflow-x: hidden;
 }
 
+img.stand-cover {
+  width: 100%;
+  max-height: 320px;
+}
+
 .navbar-default {
   border-radius: none;
 }
@@ -30,7 +35,7 @@ body {
   height: 100%;
   margin-left: -400px;
   overflow-y: auto;
-  background-color: #415A77;
+  background-color: white;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;

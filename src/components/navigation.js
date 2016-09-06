@@ -5,7 +5,7 @@ import SearchToggle from './sidebar/search_toggle';
 const { func } = React.PropTypes;
 
 const Navigation = props => (
-  <nav className="navbar navbar-default">
+  <nav className="navbar navbar-inverse">
     <div className="container">
       <ul className="nav navbar-nav">
         <SidebarToggle
