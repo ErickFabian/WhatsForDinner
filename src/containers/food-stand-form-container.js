@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FoodStandAdapter from '../adapters/food_stand';
+import FoodStandAdapter from '../adapters/food_stand_adapter';
 import FoodStandForm from '../components/food_stand_form';
 
 class FoodStandFormContainer extends Component {
@@ -12,7 +12,6 @@ class FoodStandFormContainer extends Component {
 
   handleChange(e) {
     if (e.target.getAttribute('name') === 'foodStandCover') {
-      console.log(e.target.files[0]);
       this.setState({
         'foodStandCover': e.target.files[0]
       })

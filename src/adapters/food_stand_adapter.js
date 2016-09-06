@@ -1,11 +1,17 @@
 import axios from 'axios';
 import ApplicationAdapter from '../adapters/application_adapter.js';
+import ParamSanitizer from '../utils/param_sanitizer';
 
 const resource = 'foodStands';
 
 let foodStandAdapter = {
   get(params = {}) {
-    return axios.get(this.url(), params);
+    let q = this.sanitizeParams(params);
+    return axios.get(this.url(), {
+      params: {
+        q
+      }
+    })
   },
 
   show(id){
@@ -39,6 +45,10 @@ let foodStandAdapter = {
       }
       return foodStandObj;
     });
+  },
+
+  sanitizeParams(params) {
+    return ParamSanitizer.sanitize(params);
   }
 }
 

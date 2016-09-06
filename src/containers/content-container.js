@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import update from "react-addons-update";
-import FoodStandAdapter from '../adapters/food_stand';
+import FoodStandAdapter from '../adapters/food_stand_adapter';
 import Content from '../components/content';
 
 class ContentContainer extends Component {
   state = {
     showModal: false,
     showFoodStandModal: false,
+    showSearchModal: false,
     markers: [],
     userLocation: {
       lat: 20.6612363,
@@ -19,6 +20,17 @@ class ContentContainer extends Component {
   componentDidMount() {
     this.getCurrentPosition();
     this.fetchFoodStands();
+  }
+
+  handleSearchToggle() {
+    this.setState({
+      showSearchModal: true
+    })
+  }
+
+  handleSearch(params) {
+    this.fetchFoodStands(params);
+    this.closeModal();
   }
 
   getCurrentPosition() {
@@ -37,12 +49,12 @@ class ContentContainer extends Component {
     }
   }
 
-  handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  handleLocationError() {
     alert('Could not find your location');
   }
 
-  fetchFoodStands() {
-    FoodStandAdapter.get()
+  fetchFoodStands(params = {}) {
+    FoodStandAdapter.get(params)
     .then((response) => {
       let data = JSON.parse(response.request.response);
       this.setState({
@@ -53,9 +65,10 @@ class ContentContainer extends Component {
 
   closeModal() {
     this.setState({
-      showFoodStandModal: false,
       showModal: false,
-      clickedMapPoint: null
+      clickedMapPoint: null,
+      showSearchModal: false,
+      showFoodStandModal: false
     });
   }
 
@@ -125,11 +138,14 @@ class ContentContainer extends Component {
         clickedMarker={this.state.clickedMarker}
         clickedMapPoint={this.state.clickedMapPoint}
 
-        showFoodStandModal={this.state.showFoodStandModal}
         showModal={this.state.showModal}
+        showSearchModal={this.state.showSearchModal}
+        showFoodStandModal={this.state.showFoodStandModal}
 
         onSidebarToggle={this.props.onSidebarToggle}
+        onSearchToggle={this.handleSearchToggle.bind(this)}
 
+        onSubmitSearch={this.handleSearch.bind(this)}
         onMapClick={this.handleMapClick.bind(this)}
         onMarkerClick={this.handleMarkerClick.bind(this)}
         onMarkerRightClick={this.handleMarkerRightclick.bind(this)}
