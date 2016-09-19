@@ -1,12 +1,12 @@
 import React from 'react';
 import Modal from 'react-bootstrap/lib/Modal';
-import FoodStandsMap from '../components/food-stands-map';
 import Navigation from '../components/navigation';
+import FoodStandsMapContainer from '../containers/food_stands_map_container';
 import FoodStandFormContainer from '../containers/food-stand-form-container';
 import FoodStandModalContainer from '../containers/food_stand_modal_container';
 import SearchFormContainer from '../containers/sidebar/search_form_container';
 
-const { bool, array, object, func } = React.PropTypes;
+const { bool, array, object, func, number } = React.PropTypes;
 
 const Content = props => (
   <div id="page-content-wrapper">
@@ -16,12 +16,15 @@ const Content = props => (
     />
 
     <div className="container-fluid map-wrapper">
-      <FoodStandsMap
+      <FoodStandsMapContainer
         markers={props.foodStands}
         userLocation={props.userLocation}
+        currentZoom={props.currentZoom}
+
         onMapClick={props.onMapClick}
         onMarkerClick={props.onMarkerClick}
         onMarkerRightClick={props.onMarkerRightClick}
+        onZoomChanged={props.onZoomChanged}
       />
     </div>
 
@@ -40,7 +43,7 @@ const Content = props => (
       />
     </Modal>
 
-    <Modal bsSize="large" show={props.showFoodStandModal} onHide={props.onModalClose}>
+    <Modal show={props.showFoodStandModal} onHide={props.onModalClose}>
       <FoodStandModalContainer
         foodStand={props.clickedMarker}
         closeModal={props.onModalClose}
@@ -54,6 +57,7 @@ Content.propTypes = {
   showModal:          bool.isRequired,
   foodStands:         array.isRequired,
   userLocation:       object.isRequired,
+  currentZoom:        number.isRequired,
 
   onMapClick:         func.isRequired,
   onModalClose:       func.isRequired,
@@ -62,6 +66,7 @@ Content.propTypes = {
   onSubmitSearch:     func.isRequired,
   onSidebarToggle:    func.isRequired,
   onMarkerRightClick: func.isRequired,
+  onZoomChanged:      func,
 
   clickedMarker:      object,
   clickedMapPoint:    object

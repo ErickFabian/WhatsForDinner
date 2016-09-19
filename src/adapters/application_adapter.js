@@ -3,6 +3,7 @@ let ApplicationAdapter = {
   host: 'http://localhost:3001',
 
   resourcesMappings: {
+    reviews:    '/reviews',
     foodStands: '/food_stands'
   },
 

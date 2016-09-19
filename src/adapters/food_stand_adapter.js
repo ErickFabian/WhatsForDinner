@@ -14,7 +14,7 @@ let foodStandAdapter = {
     })
   },
 
-  show(id){
+  show(id) {
     return axios.get(`${this.url()}/${id}`);
   },
 
@@ -33,7 +33,8 @@ let foodStandAdapter = {
   parseMarkers(foodStands) {
     return foodStands.map((foodStand) => {
       let foodStandObj = {
-        key:      foodStand.id,
+        id:       foodStand.id,
+        key:      `foodStand${foodStand.id}`,
         name:     foodStand.name,
         cover:    foodStand.cover,
         address:  foodStand.address,
@@ -42,7 +43,8 @@ let foodStandAdapter = {
           lat: parseFloat(foodStand.position.lat),
           lng: parseFloat(foodStand.position.lng)
         }
-      }
+      };
+
       return foodStandObj;
     });
   },

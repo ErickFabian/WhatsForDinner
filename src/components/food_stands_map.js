@@ -1,7 +1,7 @@
 import React from "react";
 import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 
-const { any, array, object, func } = React.PropTypes;
+const { any, array, object, func, number } = React.PropTypes;
 
 const FoodStandsMap = props => (
   <div id="map">
@@ -18,9 +18,10 @@ const FoodStandsMap = props => (
       }
       googleMapElement={
         <GoogleMap
-          zoom={15}
+          zoom={props.currentZoom}
           center={props.userLocation}
           onClick={props.onMapClick}
+          onZoomChanged={props.onZoomChanged}
         >
           {props.markers.map((marker, index) => {
             return (
@@ -40,10 +41,14 @@ const FoodStandsMap = props => (
 FoodStandsMap.propTypes = {
   markers:            array.isRequired,
   userLocation:       object.isRequired,
+  currentZoom:        number.isRequired,
 
   onMapClick:         func.isRequired,
   onMarkerClick:      func.isRequired,
   onMarkerRightClick: func.isRequired,
+
+  onZoomChanged:      func,
+  onCenterChanged:    func,
 
   containerElementProps: any
 };

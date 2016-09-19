@@ -13,6 +13,7 @@ class ContentContainer extends Component {
       lat: 20.6612363,
       lng: -103.3298526
     },
+    currentZoom: 15,
     clickedMapPoint: {},
     clickedMarker: {}
   };
@@ -129,11 +130,18 @@ class ContentContainer extends Component {
     this.setState({ markers });
   }
 
+  handleZoomChange(zoom = 13) {
+    this.setState({
+      currentZoom: zoom
+    })
+  }
+
   render() {
     return (
       <Content
         foodStands={this.state.markers}
         userLocation={this.state.userLocation}
+        currentZoom={this.state.currentZoom}
 
         clickedMarker={this.state.clickedMarker}
         clickedMapPoint={this.state.clickedMapPoint}
@@ -151,6 +159,7 @@ class ContentContainer extends Component {
         onMarkerRightClick={this.handleMarkerRightclick.bind(this)}
         onModalClose={this.closeModal.bind(this)}
         onSubmitMarker={this.submitMarker.bind(this)}
+        onZoomChanged={this.handleZoomChange.bind(this)}
        />
     );
   }
