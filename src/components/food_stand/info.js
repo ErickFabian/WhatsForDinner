@@ -4,6 +4,8 @@ import FaClock from 'react-icons/lib/fa/clock-o';
 import FaPhone from 'react-icons/lib/fa/phone';
 import FaGlobe from 'react-icons/lib/fa/globe';
 
+const { string } = React.PropTypes;
+
 const FoodStandInfo = props => (
   <div className='row'>
     <div className='col-md-3'>
@@ -23,22 +25,30 @@ const FoodStandInfo = props => (
           Schedule
         </span>
       </h5>
-      <h5>
-        <FaPhone
-          size={20}
-        />
-        <span className="pl-5">
-          Phone
-        </span>
-      </h5>
-      <h5>
-        <FaGlobe
-          size={20}
-        />
-        <span className="pl-5">
-          Website
-        </span>
-      </h5>
+      {
+        props.phone ?
+        <h5>
+          <FaPhone
+            size={20}
+          />
+          <span className="pl-5">
+            Phone
+          </span>
+        </h5> :
+        null
+      }
+      {
+        props.website ?
+        <h5>
+          <FaGlobe
+            size={20}
+          />
+          <span className="pl-5">
+            Website
+          </span>
+        </h5> :
+        null
+      }
     </div>
     <div className='col-md-9'>
       <h4>
@@ -64,5 +74,12 @@ const FoodStandInfo = props => (
     </div>
   </div>
 );
+
+FoodStandInfo.propTypes = {
+  address:  string.isRequired,
+  schedule: string.isRequired,
+  phone:    string,
+  website:  string,
+};
 
 export default FoodStandInfo;

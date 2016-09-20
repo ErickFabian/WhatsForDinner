@@ -116,7 +116,7 @@ class ContentContainer extends Component {
     let { markers } = this.state;
     let marker = markers[index];
 
-    FoodStandAdapter.delete(marker.key).then(() => {
+    FoodStandAdapter.delete(marker.id).then(() => {
       this.removeMarkerFromMap(markers, index);
     });
   }

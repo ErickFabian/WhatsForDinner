@@ -5,21 +5,23 @@ import FoodStandForm from '../components/food_stand_form';
 class FoodStandFormContainer extends Component {
   state = {
     foodStandName: '',
+    foodStandPhone: '',
     foodStandCover: '',
+    foodStandWebsite: '',
     foodStandAddress: '',
-    foodStandSchedule: ''
+    foodStandSchedule: '',
   }
 
   handleChange(e) {
-    if (e.target.getAttribute('name') === 'foodStandCover') {
-      this.setState({
-        'foodStandCover': e.target.files[0]
-      })
-    } else {
-      this.setState({
-        [e.target.getAttribute('name')]: e.target.value
-      });
-    }
+    this.setState({
+      [e.target.getAttribute('name')]: e.target.value
+    });
+  }
+
+  handleDrop(files) {
+    this.setState({
+      foodStandCover: files[0]
+    })
   }
 
   getValidationState(attribute) {
@@ -37,6 +39,8 @@ class FoodStandFormContainer extends Component {
   saveFoodStand() {
     var food_stand = new FormData();
     food_stand.append('food_stand[name]', this.state.foodStandName);
+    food_stand.append('food_stand[phone]', this.state.foodStandPhone);
+    food_stand.append('food_stand[website]', this.state.foodStandWebsite);
     food_stand.append('food_stand[cover]', this.state.foodStandCover);
     food_stand.append('food_stand[address]', this.state.foodStandAddress);
     food_stand.append('food_stand[schedule]', this.state.foodStandSchedule);
@@ -54,12 +58,14 @@ class FoodStandFormContainer extends Component {
         foodStandName={this.state.foodStandName}
         foodStandAddress={this.state.foodStandAddress}
         foodStandSchedule={this.state.foodStandSchedule}
+        foodStandCover={this.state.foodStandCover}
 
         closeModal={this.props.closeModal}
 
         validationState={this.getValidationState.bind(this)}
         onInputChange={this.handleChange.bind(this)}
         onSubmit={this.handleSubmit.bind(this)}
+        onDrop={this.handleDrop.bind(this)}
       />
     );
   }
