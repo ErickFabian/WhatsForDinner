@@ -37,6 +37,8 @@ let foodStandAdapter = {
         key:      `foodStand${foodStand.id}`,
         name:     foodStand.name,
         cover:    foodStand.cover,
+        phone:    foodStand.phone,
+        website:  foodStand.website,
         address:  foodStand.address,
         schedule: foodStand.schedule,
         position: {

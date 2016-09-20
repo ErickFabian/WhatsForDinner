@@ -1,6 +1,6 @@
 import axios from 'axios';
-import ApplicationAdapter from '../adapters/application_adapter.js';
 import ParamSanitizer from '../utils/param_sanitizer';
+import ApplicationAdapter from '../adapters/application_adapter.js';
 
 const resource = 'reviews';
 

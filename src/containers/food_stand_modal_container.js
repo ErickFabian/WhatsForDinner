@@ -4,7 +4,8 @@ import ReviewAdapter from '../adapters/review_adapter';
 
 class FoodStandModalContainer extends Component {
   state = {
-    reviews: [{}]
+    reviews: [{}],
+    canLeaveReview: false
   }
 
   componentDidMount() {
@@ -24,12 +25,20 @@ class FoodStandModalContainer extends Component {
     });
   }
 
+  handleLeaveReview() {
+    this.setState({
+      canLeaveReview: !this.state.canLeaveReview
+    })
+  }
+
   render() {
     return (
       <FoodStandModal
         closeModal={this.props.closeModal}
         foodStand={this.props.foodStand}
         reviews={this.state.reviews}
+        canLeaveReview={this.state.canLeaveReview}
+        leaveReview={this.handleLeaveReview.bind(this)}
       />
     );
   }

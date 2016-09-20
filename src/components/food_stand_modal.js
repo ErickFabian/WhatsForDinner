@@ -3,8 +3,7 @@ import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
 import ReviewListContainer from '../containers/food_stand/review_list_container';
 import ReviewFormContainer from '../containers/food_stand/review/form_container';
-import FaMapMarker from 'react-icons/lib/fa/map-marker';
-import FaClock from 'react-icons/lib/fa/clock-o'
+import FoodStandInfo from '../components/food_stand/info';
 
 const FoodStandModal = props => (
   <div>
@@ -16,43 +15,26 @@ const FoodStandModal = props => (
     <Modal.Body className="pl-0 pr-0 pt-10">
       <img src={props.foodStand.cover} alt={props.foodStand.name} className='img-responsive stand-cover'/>
       <div className="p-15">
-        <div className="row">
-          <div className="col-sm-12 col-md-4">
-            <h4 className="text-center">
-              <FaMapMarker
-                size={20}
-              />
-              Address
-            </h4>
-            <hr className='mt-0'/>
-            <p>
-              {props.foodStand.address}
-            </p>
-          </div>
-          <div className="col-sm-12 col-md-8">
-            <h4 className="text-center">
-              <FaClock
-                size={20}
-              />
-              Schedule
-            </h4>
-            <hr className='mt-0'/>
-            <p>
-              {props.foodStand.schedule}
-            </p>
-          </div>
-        </div>
-        <hr />
+        <FoodStandInfo
+          address={props.foodStand.address}
+          schedule={props.foodStand.schedule}
+          phone={props.foodStand.phone}
+          website={props.foodStand.website}
+        />
+        <hr className='mt-10'/>
         <ReviewListContainer
           reviews={props.reviews}
         />
         <hr />
-        <h4 className='p-0 mb-0 text-center'>
-          Leave a Review!
-        </h4>
+        <div className='text-center'>
+          <Button className='btn btn-raised btn-success' onClick={props.leaveReview}>
+            Leave a Review!
+          </Button>
+        </div>
         <ReviewFormContainer
           foodStandId={props.foodStand.id}
           handleReviewSubmit={props.closeModal}
+          canLeaveReview={props.canLeaveReview}
         />
       </div>
     </Modal.Body>

@@ -5,7 +5,6 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import StarRatingComponent from 'react-star-rating-component';
 
-
 const { func } = React.PropTypes;
 
 const ReviewItemForm = props => (

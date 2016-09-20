@@ -32,13 +32,19 @@ class ReviewFormContainer extends Component {
   }
 
   render() {
-    return (
-      <ReviewItemForm
+    let form = null;
+    if (this.props.canLeaveReview) {
+      form = <ReviewItemForm
         rating={this.state.rating}
         onSubmit={this.handleReviewSubmit.bind(this)}
         onRatingChange={this.handleRatingChange.bind(this)}
         onInputChange={this.handleChange.bind(this)}
       />
+    }
+    return (
+      <div>
+        {form}
+      </div>
     );
   }
 }
