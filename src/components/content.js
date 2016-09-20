@@ -16,16 +16,20 @@ const Content = props => (
     />
 
     <div className="container-fluid map-wrapper">
-      <FoodStandsMapContainer
-        markers={props.foodStands}
-        userLocation={props.userLocation}
-        currentZoom={props.currentZoom}
+    {
+      props.userLocation ?
+        <FoodStandsMapContainer
+          markers={props.foodStands}
+          userLocation={props.userLocation}
+          currentZoom={props.currentZoom}
 
-        onMapClick={props.onMapClick}
-        onMarkerClick={props.onMarkerClick}
-        onMarkerRightClick={props.onMarkerRightClick}
-        onZoomChanged={props.onZoomChanged}
-      />
+          onMapClick={props.onMapClick}
+          onMarkerClick={props.onMarkerClick}
+          onMarkerRightClick={props.onMarkerRightClick}
+          onZoomChanged={props.onZoomChanged}
+        /> : null
+    }
+
     </div>
 
     <Modal show={props.showModal} onHide={props.onModalClose}>
@@ -56,7 +60,6 @@ Content.propTypes = {
   showFoodStandModal: bool.isRequired,
   showModal:          bool.isRequired,
   foodStands:         array.isRequired,
-  userLocation:       object.isRequired,
   currentZoom:        number.isRequired,
 
   onMapClick:         func.isRequired,
@@ -68,6 +71,7 @@ Content.propTypes = {
   onMarkerRightClick: func.isRequired,
   onZoomChanged:      func,
 
+  userLocation:       object,
   clickedMarker:      object,
   clickedMapPoint:    object
 };

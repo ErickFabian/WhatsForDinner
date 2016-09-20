@@ -6,8 +6,8 @@ class ReviewList extends Component {
     var display;
     if (this.props.reviews.length >= 1) {
       display = this.props.reviews.map((review) => {
-          return <ReviewItemContainer key={review.key} review={review}/>
-        });
+        return <ReviewItemContainer key={review.key} review={review}/>
+      });
     } else {
       display = 'This place does not have any reviews yet!';
     }

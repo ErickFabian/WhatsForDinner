@@ -9,6 +9,7 @@ class ReviewItemContainer extends Component {
 
     return (
       <ReviewItem
+        key={review.key}
         rate={review.rate}
         owner={review.owner}
         createdAt={createdAt}

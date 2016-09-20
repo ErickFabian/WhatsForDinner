@@ -7,7 +7,7 @@ class ReviewItemContainer extends Component {
     let src = this.props.cover === '' ?
       defaultCoverSrc : this.props.cover.preview;
     return (
-      <img src={src} className='img-responsive' alt='cover'/>
+      <img src={src} className='img-responsive stand-cover' alt='cover'/>
     );
   }
 }

@@ -48,7 +48,7 @@ class FoodStandFormContainer extends Component {
     food_stand.append('food_stand[position][lng]', this.props.clickedMapPoint.latLng.lng());
 
     FoodStandAdapter.create(food_stand).then((response) => {
-      this.props.submitMarker();
+      this.props.submitMarker(response.data.food_stand.id);
     });
   }
 

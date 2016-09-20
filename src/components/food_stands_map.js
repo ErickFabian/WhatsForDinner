@@ -18,8 +18,9 @@ const FoodStandsMap = props => (
       }
       googleMapElement={
         <GoogleMap
-          zoom={props.currentZoom}
-          center={props.userLocation}
+          ref={(map) => (map)}
+          defaultZoom={props.currentZoom}
+          defaultCenter={props.userLocation}
           onClick={props.onMapClick}
           onZoomChanged={props.onZoomChanged}
         >

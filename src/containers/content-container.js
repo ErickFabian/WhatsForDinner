@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import update from "react-addons-update";
 import FoodStandAdapter from '../adapters/food_stand_adapter';
 import Content from '../components/content';
 
@@ -9,10 +8,6 @@ class ContentContainer extends Component {
     showFoodStandModal: false,
     showSearchModal: false,
     markers: [],
-    userLocation: {
-      lat: 20.6612363,
-      lng: -103.3298526
-    },
     currentZoom: 15,
     clickedMapPoint: {},
     clickedMarker: {}
@@ -51,6 +46,12 @@ class ContentContainer extends Component {
   }
 
   handleLocationError() {
+    let defaultLocation = {
+      lat: 20.6612363,
+      lng: -103.3298526
+    };
+
+    this.setState({ userLocation: defaultLocation});
     alert('Could not find your location');
   }
 
@@ -73,26 +74,16 @@ class ContentContainer extends Component {
     });
   }
 
-  submitMarker(e) {
-    this.addMarkerToMap();
+  submitMarker(id) {
+    this.addMarkerToMap(id);
     this.setState({
       clickedMapPoint: null,
       showModal: false
     });
   }
 
-  addMarkerToMap() {
-    let markers = this.state.markers;
-    markers = update(markers, {
-      $push: [
-        {
-          position: this.state.clickedMapPoint.latLng,
-          defaultAnimation: 2,
-          key:  Date.now(),
-        },
-      ],
-    });
-    this.setState({ markers });
+  addMarkerToMap(id) {
+    this.fetchFoodStands();
   }
 
   handleMapClick(clickedMapPoint) {
@@ -105,7 +96,6 @@ class ContentContainer extends Component {
   handleMarkerClick(index) {
     let { markers } = this.state;
     let marker = markers[index];
-
     this.setState({
       showFoodStandModal: true,
       clickedMarker: marker
@@ -122,12 +112,7 @@ class ContentContainer extends Component {
   }
 
   removeMarkerFromMap(markers, index) {
-    markers = update(markers, {
-      $splice: [
-        [index, 1],
-      ],
-    });
-    this.setState({ markers });
+    this.fetchFoodStands();
   }
 
   handleZoomChange(zoom = 13) {
