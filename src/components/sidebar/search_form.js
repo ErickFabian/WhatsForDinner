@@ -42,8 +42,8 @@ const SearchForm = props => (
       </FormGroup>
     </Modal.Body>
     <Modal.Footer>
-      <Button type='submit' className='btn btn-primary btn-md'>Submit</Button>
-      <Button className='btn btn-default btn-md' onClick={props.closeModal}>Close</Button>
+      <Button type='submit' className='btn btn-success btn-raised btn-md'>Submit</Button>
+      <Button className='btn btn-danger btn-raised btn-md' onClick={props.closeModal}>Close</Button>
     </Modal.Footer>
   </form>
 );

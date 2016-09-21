@@ -7,70 +7,90 @@ import FaGlobe from 'react-icons/lib/fa/globe';
 const { string } = React.PropTypes;
 
 const FoodStandInfo = props => (
-  <div className='row'>
-    <div className='col-md-3'>
-      <h5>
-        <FaMapMarker
-          size={20}
-        />
-        <span className="pl-5">
-          Address
-        </span>
-      </h5>
-      <h5>
-        <FaClock
-          size={20}
-        />
-        <span className="pl-5">
-          Schedule
-        </span>
-      </h5>
-      {
-        props.phone ?
+  <div className='info-wrapper'>
+    <div className='row'>
+      <div className='col-xs-3'>
         <h5>
-          <FaPhone
+          <FaMapMarker
             size={20}
           />
           <span className="pl-5">
-            Phone
+            Address
           </span>
-        </h5> :
-        null
-      }
-      {
-        props.website ?
-        <h5>
-          <FaGlobe
-            size={20}
-          />
-          <span className="pl-5">
-            Website
-          </span>
-        </h5> :
-        null
-      }
-    </div>
-    <div className='col-md-9'>
-      <h4>
+        </h5>
+      </div>
+      <div className='col-xs-9'>
+        <h4>
         <small>
           {props.address}
         </small>
       </h4>
-      <h4>
+      </div>
+    </div>
+    <div className='row'>
+      <div className='col-xs-3'>
+        <h5>
+          <FaClock
+            size={20}
+          />
+          <span className="pl-5">
+            Schedule
+          </span>
+        </h5>
+      </div>
+      <div className='col-xs-9'>
+        <h4>
         <small>
           {props.schedule}
         </small>
       </h4>
-      <h4>
-        <small>
-          {props.phone}
-        </small>
-      </h4>
-      <h4>
+      </div>
+    </div>
+    <div className='row'>
+      <div className='col-xs-3'>
+        {
+          props.website ?
+          <h5>
+            <FaGlobe
+              size={20}
+            />
+            <span className="pl-5">
+              Website
+            </span>
+          </h5> :
+          null
+        }
+      </div>
+      <div className='col-xs-9'>
+        <h4>
         <small>
           {props.website}
         </small>
       </h4>
+      </div>
+    </div>
+    <div className='row'>
+      <div className='col-xs-3'>
+        {
+          props.phone ?
+          <h5>
+            <FaPhone
+              size={20}
+            />
+            <span className="pl-5">
+              Phone
+            </span>
+          </h5> :
+          null
+        }
+      </div>
+      <div className='col-xs-9'>
+        <h4>
+        <small>
+          {props.phone}
+        </small>
+      </h4>
+      </div>
     </div>
   </div>
 );

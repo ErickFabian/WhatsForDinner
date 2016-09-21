@@ -1,6 +1,7 @@
-// TODO: Manage Environments
+const Config = require(`../config/${process.env.NODE_ENV}`).default;
+
 let ApplicationAdapter = {
-  host: 'https://que-hay-para-cenar-api.herokuapp.com',
+  host: Config.host,
 
   resourcesMappings: {
     reviews:    '/reviews',
