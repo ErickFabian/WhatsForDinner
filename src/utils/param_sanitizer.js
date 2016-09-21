@@ -6,7 +6,7 @@ let ParamSanitizer = {
   transformObjectKeys(object) {
     let newObject = {};
 
-    Object.keys(object).forEach(function(key) {
+    Object.keys(object).forEach((key) => {
       if ((object[key] instanceof(Object)) && !(object[key] instanceof(Array))) {
         newObject[this.underscore(key)] = this.transformObjectKeys(object[key]);
       } else {
