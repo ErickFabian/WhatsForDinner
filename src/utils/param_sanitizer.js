@@ -1,3 +1,5 @@
+import underscore from 'underscore.string/underscored'
+
 let ParamSanitizer = {
   sanitize(params) {
     return this.transformObjectKeys(params);
