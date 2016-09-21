@@ -6,15 +6,19 @@ let ParamSanitizer = {
   transformObjectKeys(object) {
     let newObject = {};
 
-    Object.keys(object).forEach(function(key) {
+    Object.keys(object).forEach((key) => {
       if ((object[key] instanceof(Object)) && !(object[key] instanceof(Array))) {
-        newObject[underscore(key)] = this.transformObjectKeys(object[key]);
+        newObject[this.underscore(key)] = this.transformObjectKeys(object[key]);
       } else {
-        newObject[underscore(key)] = object[key];
+        newObject[this.underscore(key)] = object[key];
       }
     });
 
     return newObject;
+  },
+
+  underscore(str) {
+    return str.replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
   }
 }
 
