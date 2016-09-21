@@ -1,5 +1,3 @@
-import underscore from 'underscore.string/underscored'
-
 let ParamSanitizer = {
   sanitize(params) {
     return this.transformObjectKeys(params);
@@ -10,13 +8,17 @@ let ParamSanitizer = {
 
     Object.keys(object).forEach(function(key) {
       if ((object[key] instanceof(Object)) && !(object[key] instanceof(Array))) {
-        newObject[underscore(key)] = this.transformObjectKeys(object[key]);
+        newObject[this.underscore(key)] = this.transformObjectKeys(object[key]);
       } else {
-        newObject[underscore(key)] = object[key];
+        newObject[this.underscore(key)] = object[key];
       }
     });
 
     return newObject;
+  }
+
+  underscored(str) {
+    return str.replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
   }
 }
 
