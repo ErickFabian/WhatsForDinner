@@ -17,7 +17,7 @@ let ParamSanitizer = {
     return newObject;
   },
 
-  underscored(str) {
+  underscore(str) {
     return str.replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
   }
 }

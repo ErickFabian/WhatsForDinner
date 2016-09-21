@@ -1,6 +1,6 @@
 // TODO: Manage Environments
 let ApplicationAdapter = {
-  host: 'http://localhost:3001',
+  host: 'https://que-hay-para-cenar-api.herokuapp.com',
 
   resourcesMappings: {
     reviews:    '/reviews',
